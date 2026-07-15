@@ -15,7 +15,7 @@ Require a specification in the conversation or a document path supplied with the
 
 ## Workflow
 
-1. Verify that the `/todos` skill is available and Pi's `todo` extension is installed by confirming its todo tools are available. If either prerequisite is missing, report what is unavailable and stop before creating anything.
+1. Verify that the `mitsupi:todos.ts` extension is installed by confirming its `todo` tools are available. If the extension or its tools are unavailable, report what is missing and stop before creating anything.
 2. Extract the required outcomes, constraints, acceptance criteria, explicit exclusions, and implementation details from both the specification and relevant conversation context. Preserve decisions negotiated during grilling or clarification; do not generalize them away or invent work absent from the source material.
 3. Split the work into cohesive units. Each todo must:
    - deliver one useful, independently verifiable outcome;
@@ -34,5 +34,5 @@ Require a specification in the conversation or a document path supplied with the
    - identifies the todos it blocks;
    - uses actual `TODO-<id>` references for every dependency.
 9. Carry all relevant implementation details, decisions, rationale, constraints, and out-of-scope boundaries into the affected todos. Information from the specification or prior grilling must not be lost during decomposition.
-10. Use `/todos` to verify the created todos. Confirm every specification outcome and implementation decision is covered, execution order is dependency-safe, references resolve, dependency relationships are reciprocal, and the graph has no cycles or self-references.
+10. Use the `mitsupi:todos.ts` extension's `todo` tools to retrieve and verify the created todos. Confirm every specification outcome and implementation decision is covered, execution order is dependency-safe, references resolve, dependency relationships are reciprocal, and the graph has no cycles or self-references.
 11. Report the created todos in execution order with their IDs and dependency summary.
