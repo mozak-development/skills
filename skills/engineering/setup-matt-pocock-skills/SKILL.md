@@ -29,7 +29,13 @@ Look at the current repo to understand its starting state. Read whatever exists;
 - Is the `triage` skill installed? (a `triage` skill folder alongside this one, or `triage` in your available skills.) This decides whether Section B runs at all.
 - Monorepo signals — a `pnpm-workspace.yaml`, a `workspaces` field in `package.json`, or a populated `packages/*` with its own `src/`. Present only in a genuinely large multi-package repo; their absence means single-context, which is almost every repo.
 
-### 2. Present findings and ask
+### 2. File name conventions for local files
+
+If local files are created under the directory ".scratches", each sub-directory should be prefixed with a `taskId`. Use current Git branch to isolate a taskID. The branch pattern is: (feature|bugfix)/I0BB-xyz-some-text. "I0BB-xyz" here is the `taskId`. If taskId can not be determined, set it to an empty string, remove this prefix completely. Means, remove "<taksId>-" prefix.
+
+Every directory under ".scratches" should have a subdirectory like this: <taskId>-issues.
+
+### 3. Present findings and ask
 
 Summarise what's present and what's missing. Then take the sections in order — one section, one answer, then the next.
 
@@ -43,7 +49,7 @@ Default posture: these skills were designed for GitHub. If a `git remote` points
 
 - **GitHub** — issues live in the repo's GitHub Issues (uses the `gh` CLI)
 - **GitLab** — issues live in the repo's GitLab Issues (uses the [`glab`](https://gitlab.com/gitlab-org/cli) CLI)
-- **Local markdown** — issues live as files under `.scratch/<feature>/` in this repo (good for solo projects or repos without a remote)
+- **Local markdown** — issues live as files under `.scratch/<taskId>-<feature>/` in this repo (good for solo projects or repos without a remote). how to extract the `taskId`, look into 
 - **Other** (Jira, Linear, etc.) — ask the user to describe the workflow in one paragraph; the skill will record it as freeform prose
 
 Record the choice in `docs/agents/issue-tracker.md`. The GitHub and GitLab templates carry a "PRs as a request surface" flag, defaulted **off** — leave it off and don't raise it; a user who wants external PRs in the triage queue can flip the flag in the file later.
@@ -60,7 +66,7 @@ The defaults are the five canonical roles, each label string equal to its name: 
 
 Offer **multi-context** — a root `CONTEXT-MAP.md` pointing to per-context `CONTEXT.md` files — only when exploration found monorepo signals. Then confirm which layout they want.
 
-### 3. Confirm and edit
+### 4. Confirm and edit
 
 Show the user a draft of:
 
@@ -69,7 +75,7 @@ Show the user a draft of:
 
 Let them edit before writing.
 
-### 4. Write
+### 5. Write
 
 **Pick the file to edit:**
 
@@ -111,6 +117,6 @@ Then write the docs files using the seed templates in this skill folder as a sta
 
 For "other" issue trackers, write `docs/agents/issue-tracker.md` from scratch using the user's description.
 
-### 5. Done
+### 6. Done
 
 Tell the user the setup is complete and which engineering skills will now read from these files. Mention they can edit `docs/agents/*.md` directly later — re-running this skill is only necessary if they want to switch issue trackers or restart from scratch.
