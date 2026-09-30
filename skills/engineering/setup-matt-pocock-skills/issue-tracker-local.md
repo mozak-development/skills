@@ -1,12 +1,12 @@
 # Issue tracker: Local Markdown
 
-Issues and specs (you may know a spec as a PRD) for this repo live as markdown files in `.scratch/`.
+Issues and specs for this repo live as markdown files in `.scratch/`.
 
 ## Conventions
 
 - Use current Git branch to isolate a taskID. The branch pattern is: (feature|bugfix)/I0BB-xyz-some-text. "I0BB-xyz" here is the `taskId`. If taskId can not be determined, set it to an empty string, remove this prefix completely. Means, remove "<taksId>-" prefix.
 - One feature per directory: `.scratch/<taskId>-<feature-slug>/`
-- The spec is `.scratch/<feature-slug>/spec.md`
+- The spec is `.scratch/<taskId>-<feature-slug>/spec.md`
 - Implementation issues are one file per ticket at `.scratch/<taskId>-<feature-slug>/issues/<NN>-<slug>.md`, numbered from `01` — never a single combined tickets file
 - Triage state is recorded as a `Status:` line near the top of each issue file (see `triage-labels.md` for the role strings)
 - Comments and conversation history append to the bottom of the file under a `## Comments` heading
