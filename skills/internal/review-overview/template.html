@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<title>{{DOCUMENT_TITLE}}</title>
+<link rel="stylesheet" href="review-overview.css">
+</head>
+<body>
+<header class="top"><div><a class="brand" href="#top">{{DOSSIER_LABEL}}</a><nav class="nav" aria-label="Dossier sections"><a href="#delta">Delta</a><a href="#flow">Flow</a><a href="#classes">Classes</a><a href="#semantics">Semantics</a><a href="#details">Index</a><a href="#tests">Tests</a><a href="#boundary">Boundary</a></nav></div></header>
+<main id="top">
+<section class="hero" aria-labelledby="title"><div><div class="kicker">{{SCOPE_KICKER}}</div><h1 id="title">{{PRIMARY_HEADLINE}}<span>{{ACCENT_HEADLINE}}</span></h1><p class="lede">{{EXECUTIVE_LEDE}}</p><div class="actions"><a class="btn primary" href="#flow">Trace runtime flow ↓</a><a class="btn" href="#classes">Open class map</a></div></div><aside class="plate" aria-label="Changeset summary"><div class="plate-head"><span>{{CHANGESET_ID}}</span><b>{{CHANGESET_STATE}}</b></div><div class="metric"><span>Smallest building block</span><strong class="accent">{{BUILDING_BLOCK}}</strong></div><div class="metric"><span>Decision owner</span><strong>{{DECISION_OWNER}}</strong></div><div class="metric"><span>Side-effect boundary</span><strong>{{SIDE_EFFECT_BOUNDARY}}</strong></div><div class="metric"><span>Production files changed</span><strong>{{PRODUCTION_FILE_COUNT}}</strong></div></aside></section>
+
+<section id="delta" aria-labelledby="delta-title"><div class="section-head"><div class="num">01</div><div><div class="kicker">Executive delta</div><h2 id="delta-title">{{DELTA_TITLE}}</h2><p class="intro">{{DELTA_INTRO}}</p></div></div><div class="delta"><article class="card"><h3>Before</h3><ul>{{BEFORE_ITEMS}}</ul></article><div class="arrow" aria-hidden="true">→</div><article class="card after"><h3>After</h3><ul>{{AFTER_ITEMS}}</ul></article></div><div class="thesis"><b>Core thesis</b><p>{{CORE_THESIS}}</p></div></section>
+
+<section id="flow" aria-labelledby="flow-title"><div class="section-head"><div class="num">02</div><div><div class="kicker">Runtime flow</div><h2 id="flow-title">{{FLOW_TITLE}}</h2><p class="intro">{{FLOW_INTRO}}</p></div></div><div class="flow-scroll" tabindex="0" aria-label="Horizontally scrollable runtime flow"><div class="flow" role="list">{{FLOW_STAGES}}</div></div><div class="note"><b>Failure boundary</b><p>{{FAILURE_BOUNDARY}}</p></div></section>
+
+<section id="classes" aria-labelledby="classes-title"><div class="section-head"><div class="num">03</div><div><div class="kicker">Class diagram</div><h2 id="classes-title">{{CLASS_DIAGRAM_TITLE}}</h2><p class="intro">Select a focusable node to open its source drill-down. Lines must represent verified calls or data relationships.</p></div></div><div class="diagram-shell"><div class="diagram-bar"><span>{{DIAGRAM_CONTEXT}}</span><b>Interactive nodes ↘</b></div><div class="diagram-scroll">{{INLINE_SVG_CLASS_DIAGRAM}}</div></div></section>
+
+<section id="semantics" aria-labelledby="semantics-title"><div class="section-head"><div class="num">04</div><div><div class="kicker">Decision semantics</div><h2 id="semantics-title">{{SEMANTICS_TITLE}}</h2><p class="intro">{{SEMANTICS_INTRO}}</p></div></div><div class="semantics">{{SEMANTIC_CARDS}}</div><div class="table-wrap mt-25" tabindex="0">{{COMPONENT_OR_DECISION_MATRIX}}</div></section>
+
+<section id="details" aria-labelledby="details-title"><div class="section-head"><div class="num">05</div><div><div class="kicker">Drill-down index</div><h2 id="details-title">Concept → method → source</h2><p class="intro">Collapsed notes map architectural concepts to concrete source.</p></div></div><div class="drills">{{DETAIL_BLOCKS}}</div></section>
+
+<section aria-labelledby="invariants-title"><div class="section-head"><div class="num">06</div><div><div class="kicker">Preserved invariants</div><h2 id="invariants-title">{{INVARIANTS_TITLE}}</h2></div></div><div class="invariants">{{INVARIANT_CARDS}}</div></section>
+
+<section id="tests" aria-labelledby="tests-title"><div class="section-head"><div class="num">07</div><div><div class="kicker">Verification map</div><h2 id="tests-title">{{VERIFICATION_TITLE}}</h2><p class="intro">{{VERIFICATION_INTRO}}</p></div></div><div class="table-wrap">{{VERIFICATION_MATRIX}}</div><div class="scope-list mt-22">{{VERIFICATION_SUMMARY}}</div></section>
+
+<section id="boundary" aria-labelledby="boundary-title"><div class="section-head"><div class="num">08</div><div><div class="kicker">Review boundary</div><h2 id="boundary-title">Neutral hotspots and explicit follow-up work</h2><p class="intro">These are navigation cues for a later review, not findings.</p></div></div><div class="boundary-grid">{{REVIEW_BOUNDARY_CARDS}}</div><div class="note"><b>Changeset inventory</b><p>{{CHANGESET_INVENTORY}}</p></div></section>
+</main>
+<footer><span>{{SOURCE_NOTE}}</span><span class="mono">{{OUTPUT_PATH}}</span></footer>
+<script src="review-overview.js"></script>
+</body>
+</html>
