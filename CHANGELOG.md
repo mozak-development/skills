@@ -1,5 +1,119 @@
 # mattpocock-skills
 
+## 1.3.0
+
+### Minor Changes
+
+- [`c0f0e83`](https://github.com/mattpocock/skills/commit/c0f0e8344020b8ffda74b02f29d2b0cd69c221c0) Thanks [@mattpocock](https://github.com/mattpocock)! - Bring the **`ask-matt`** router up to date with the full skill set. It now maps five skills it was missing: **`tdd`** (woven into the main flow as the red-green engine `implement` drives), **`diagnosing-bugs`** (a new "Something's broken" on-ramp — there was previously no route for a bug), **`domain-modeling`** and **`codebase-design`** (a new "Vocabulary underneath" section), and **`grilling`** (the shared interview primitive). `prototype` is fleshed out as a standalone and the description broadens from "user-invoked skills" to "the skills". A maintenance rule is added to `CLAUDE.md` so any future skill add/rename/remove or flow change triggers an `ask-matt` re-check, beside the existing docs-page re-sync rule.
+
+- [`64072dd`](https://github.com/mattpocock/skills/commit/64072dd3db1211337e7ef22c760913e3ca650191) Thanks [@mattpocock](https://github.com/mattpocock)! - Rename the in-progress **`review`** skill to **`code-review`** and promote it from `in-progress/` to the `engineering/` bucket. It now ships in the plugin, is listed in the top-level and Engineering READMEs (Model-invoked), and has a human-facing docs page at `docs/engineering/code-review.md`. The `/implement` skill and docs now point at `/code-review`.
+
+- [`ded883a`](https://github.com/mattpocock/skills/commit/ded883ad7e9a3c2794d3c93997b004e2e4638bd2) Thanks [@mattpocock](https://github.com/mattpocock)! - Add a fourth **Task** ticket type to the **`decision-mapping`** skill. Some blockers are neither a decision, a prototype, nor research — just literal manual work that has to happen before the discussion can move forward (moving data, signing up for a third-party service, provisioning access). The agent automates it where it can, otherwise hands the human a precise checklist, and records any resulting facts later tickets depend on.
+
+- [#1120](https://github.com/mattpocock/skills/pull/1120) [`2aecca1`](https://github.com/mattpocock/skills/commit/2aecca12ea9ff047f76c8178cb64dfeafd192abe) Thanks [@mattpocock](https://github.com/mattpocock)! - Graduate **`implement-spec`** into the **Engineering** bucket, so it ships in the Claude Code plugin, gets a docs page, and is routed by `ask-matt` as the parallel alternative to per-ticket `implement`.
+
+  `implement-spec` (user-invoked) implements a whole spec in one run. It reads the tickets as a **task graph**, runs implementer subagents in their own worktrees across the ready **frontier**, and lands everything on one **integration branch**, closing out with `code-review`. Ahead of graduating:
+
+  - The goal is now the integration branch, not a PR. A draft PR opens only when the issue tracker closes work through PRs or you ask for one, and only after the first merge (a branch with no commits ahead of main can't open one). Without a PR, the tickets are resolved the way the tracker closes work.
+  - It points at the issue tracker like its siblings, telling you to run `/setup-matt-pocock-skills` when none has been provided, rather than silently defaulting to `gh`.
+  - Each implementer confirms its worktree is based on the integration branch, builds its ticket with `tdd`, and merges the integration tip into its own branch before reporting done, so each merge is a fast-forward.
+
+- [#1120](https://github.com/mattpocock/skills/pull/1120) [`2aecca1`](https://github.com/mattpocock/skills/commit/2aecca12ea9ff047f76c8178cb64dfeafd192abe) Thanks [@mattpocock](https://github.com/mattpocock)! - Graduate **`pr`** into the **Engineering** bucket, so it ships in the Claude Code plugin, gets a docs page, and is routed by `ask-matt` as the PR-body close-out.
+
+  `pr` (model-invoked) is the shape a pull request body should take: a summary as the smallest visual that makes the change clear (pseudocode, a call tree, a file tree, Mermaid, a diff), before/after evidence that it works, and a merge-danger call (one-way or two-way door, plus blast radius). The Summary visuals are adapted from Dex Horthy's `show-me`, credited in the skill's `CREDITS.md`.
+
+- [#1120](https://github.com/mattpocock/skills/pull/1120) [`2aecca1`](https://github.com/mattpocock/skills/commit/2aecca12ea9ff047f76c8178cb64dfeafd192abe) Thanks [@mattpocock](https://github.com/mattpocock)! - Graduate **`retro`** into the **Engineering** bucket, so it ships in the Claude Code plugin, gets a docs page, and is routed by `ask-matt` as the last step of the main flow, after `code-review`.
+
+  `retro` (user-invoked) looks back at a coding session and suggests changes to the agent's environment rather than the code: navigation pointers, automated checks, coding standards, steering files, tool economy, information access. It classifies each coding-standards finding first: a mechanical violation gets a deterministic check (a linter rule, a pre-commit hook, or a CI job), and `CODING_STANDARDS.md` is kept for genuine judgement calls. A repo with no guardrail at all is a finding in its own right.
+
+- [`e499863`](https://github.com/mattpocock/skills/commit/e499863cbf9edca856c87e98558198c1cc99a0c4) Thanks [@mattpocock](https://github.com/mattpocock)! - Add a confirmation gate to **`grilling`**: the agent won't enact the plan until you confirm the shared understanding has been reached, turning the skill's existing "shared understanding" completion criterion into an explicit stop-gate. The `description` also recruits the pretrained **`grill`** leading word ("Grill the user relentlessly") to sharpen invocation, and the docs page is re-synced with the new gate behaviour.
+
+- [`0d340a5`](https://github.com/mattpocock/skills/commit/0d340a5bfc9e64eb118b7aacbd454ebebc623728) Thanks [@mattpocock](https://github.com/mattpocock)! - Make the **`prototype`** skill model-invoked, so the agent can reach for it autonomously (and other skills can too). Its description is rewritten around the leading word _prototype_ — throwaway code that answers a design question — with one trigger per branch (state/logic sanity-check, or UI exploration).
+
+- [#1120](https://github.com/mattpocock/skills/pull/1120) [`daa01d8`](https://github.com/mattpocock/skills/commit/daa01d8aa68ad5c61b68970ec2018d0ce9567be6) Thanks [@mattpocock](https://github.com/mattpocock)! - Remove the **`resolving-merge-conflicts`** skill. It's no longer needed, and nothing replaces it: the agent works through an in-progress merge or rebase conflict without a dedicated skill. It leaves the Claude Code plugin, the README and the `ask-matt` router. Its docs page at `https://aihero.dev/skills-resolving-merge-conflicts` stays up, marked archived.
+
+- [#1120](https://github.com/mattpocock/skills/pull/1120) [`006a52b`](https://github.com/mattpocock/skills/commit/006a52be23e0178375e083e30535fa8224471f3e) Thanks [@mattpocock](https://github.com/mattpocock)! - Rename the `CONTEXT.md`/`CONTEXT-MAP.md` domain-doc convention to `GLOSSARY.md`/`GLOSSARY-MAP.md` everywhere the skills read and write it (`domain-modeling`, `grill-with-docs`, `improve-codebase-architecture`, `setup-matt-pocock-skills`, `triage`, `tdd`, `diagnosing-bugs`, `ask-matt`, `codebase-design`, `wait-what`, `pr`), plus the docs pages and this repo's own root glossary.
+
+  If you have an existing `CONTEXT.md` (or `CONTEXT-MAP.md`) from before this change, `git mv` it to the new name: the skills only look for `GLOSSARY.md`/`GLOSSARY-MAP.md` going forward.
+
+- [`24e133c`](https://github.com/mattpocock/skills/commit/24e133c784d38eaead7746796603db626a757ab1) Thanks [@mattpocock](https://github.com/mattpocock)! - Add the **`research`** skill — a small, model-invoked skill that spins up a **background agent** to investigate a question against **primary sources** (official docs, source code, specs, first-party APIs), then leaves a single cited Markdown file wherever the repo keeps such notes. It's delegable reading legwork: you keep working while it reads, and get back a document to grill, plan, or design against. Listed in the top-level and Engineering READMEs (Model-invoked), added to `.claude-plugin/plugin.json`, given a docs page at `docs/engineering/research.md`, and routed as a Standalone in `ask-matt`.
+
+- [`efc2b9c`](https://github.com/mattpocock/skills/commit/efc2b9c020099d5774ba020a558f3f41c430c713) Thanks [@mattpocock](https://github.com/mattpocock)! - Change **`wayfinder`**'s claim mechanism from a label to an assignee.
+
+  A session now **claims** a ticket by assigning it to the dev driving the map, rather than setting a `wayfinder:claimed` label. The assignee _is_ the claim — an open, unassigned ticket is unclaimed — which reads more naturally in GitHub's own UI and frees the label vocabulary to `wayfinder:<type>` alone. The _claim_ leading word and its "first, before any work" rationale are unchanged; only the physical expression moved.
+
+- [`2a14e35`](https://github.com/mattpocock/skills/commit/2a14e355da3047b6c5399763b97ca33d31e26b82) Thanks [@mattpocock](https://github.com/mattpocock)! - Make **`wayfinder`** collaborative by moving the map off a local Markdown file and onto the repo's issue tracker.
+
+  The map is now a single `wayfinder:map` issue whose tickets are its child issues — one shared URL the whole team can watch and comment on. Blocking, claiming (`wayfinder:claimed`), and the frontier query all use native tracker semantics, so a session loads the map at low resolution (Notes + one context pointer per closed ticket + Fog prose) and zooms into individual tickets on demand, instead of loading the whole map every time.
+
+  Wayfinder stays tracker-agnostic: the per-tracker mechanics live behind a pointer in `docs/agents/issue-tracker.md`, so `setup-matt-pocock-skills` now seeds a "Wayfinding operations" section for GitHub, GitLab, and local-markdown. Absent that doc, Wayfinder defaults to local-markdown.
+
+- [`7b43403`](https://github.com/mattpocock/skills/commit/7b43403fda768da9b22cfc5e931f7593aaed62eb) Thanks [@mattpocock](https://github.com/mattpocock)! - Give **`wayfinder`** a first-class notion of **out of scope**, separate from fog.
+
+  Fog and out-of-scope were conflated under one `## Fog` map section, gated by different things: fog by _knowledge_ (can't specify it yet — in scope, unripe, graduates as the frontier advances), out-of-scope by _scope_ (beyond the destination — never graduates). Cramming both under "Fog" made out-of-scope work read as takeable frontier (an unblocked, unclaimed item is indistinguishable from a live ticket).
+
+  Now the map body has two plainly-named sections — **`## Not yet specified`** and **`## Out of scope`** — and the skill's prose splits to match: the **Fog of war** section teaches only the not-yet-specified bucket and keeps the two-way _fog-or-ticket_ sharpness test, while a new **Out of scope** section owns the scope axis (beyond the destination, closed not graduating, returns only as a fresh effort if the destination is redrawn). Charting and working-the-map now rule a beyond-destination ticket out of scope — close it, one line in _Out of scope_ — rather than leaving it on the frontier or logging it in _Decisions so far_.
+
+  The **fog of war** leading word is retained: it names the concept and drives the graduate-the-fog behavior in the prose; only the human-facing map headings go to plain language.
+
+- [`2e39c74`](https://github.com/mattpocock/skills/commit/2e39c743940e9a3f3b547f0a331c3447f962de8a) Thanks [@mattpocock](https://github.com/mattpocock)! - Sharpen **`wayfinder`**'s top-level purpose around **destination** as the leading word: wayfinding finds the _way_ to a destination, it doesn't charge at building it.
+
+  The opening now states that the destination varies per effort — a spec to hand off and iterate, a decision to lock before planning, or a change made in place like a data-structure migration — and that naming it is the first act of charting, because it shapes every ticket. The map body gains a `## Destination` field that every session orients to before choosing a ticket, and triage's first step now pins the destination before any ticket exists. The stray `goal` mentions in the description and Fog section are unified onto `destination`.
+
+- [`4b9d1e1`](https://github.com/mattpocock/skills/commit/4b9d1e18ccb2b58b962462cb95dab1dcbf4981c1) Thanks [@mattpocock](https://github.com/mattpocock)! - Make **`wayfinder`**'s no-duplication contract explicit: the map is an **index**, not a store.
+
+  Adopting "index" as the leading word for the map's role fixes two duplication risks. The map now states up front that a decision lives in exactly one place — its ticket — so it only ever gists and links, never restates the answer (previously this rule was implied inside an HTML comment in the map-body template). And graduating fog into a ticket now clears the graduated patch from the Fog, so a suspected question can't linger in both places at once.
+
+- [`163bb90`](https://github.com/mattpocock/skills/commit/163bb909b21ca11ab41c612b9c342cfe6e2b82ce) Thanks [@mattpocock](https://github.com/mattpocock)! - Reframe **`wayfinder`**'s description around the work it's for: planning a huge chunk of work, more than one agent session can hold.
+
+  The description does the skill's invocation work, so it now leads with the trigger that actually reaches for Wayfinder — a big effort you need to break down — instead of the softer "chart a route through a foggy problem". The skill body and fog-of-war mechanic are unchanged.
+
+- [`d7a9ca1`](https://github.com/mattpocock/skills/commit/d7a9ca1a1d34bae91d6bb8b00f2b7081899a8e8c) Thanks [@mattpocock](https://github.com/mattpocock)! - Rename the **`decision-mapping`** skill to **`wayfinder`**, invoked as `/wayfinder`.
+
+  "Decision map" was jargony and inaccurate — only one of the skill's four ticket types (Grilling) is actually a decision. The reframe charts a route through a foggy problem, resolving investigation tickets one at a time until the way to the goal is clear. This makes one coherent leading-word frame (fog of war / frontier / the map) instead of mixing an invented term on top of it.
+
+  Also a pruning pass: unified `node`→`ticket`, bound "the frontier" to the unblocked tickets, dropped the duplicated "one question at a time" (owned by `/grilling`), and trimmed intro no-ops.
+
+### Patch Changes
+
+- [#848](https://github.com/mattpocock/skills/pull/848) [`f02e2ed`](https://github.com/mattpocock/skills/commit/f02e2ed3624d031272f8547742d23bf6bca8b072) Thanks [@mattpocock](https://github.com/mattpocock)! - domain-modeling: trigger on discussing codebase terminology and on writing or editing a GLOSSARY.md or an ADR directly, replacing the narrower "pin down domain terminology or a ubiquitous language" / "record an architectural decision" phrasing. Also drops the "another skill needs to maintain the domain model" caveat, since that's the invoking skill's job to state explicitly, not this description's.
+
+- [#911](https://github.com/mattpocock/skills/pull/911) [`4f28947`](https://github.com/mattpocock/skills/commit/4f289474bad013fe2be8f8769d733f59d9103d6b) Thanks [@mattpocock](https://github.com/mattpocock)! - Quote the `description` front matter in `to-spec`, `code-review`, `setup-matt-pocock-skills`, `writing-fragments`, `writing-shape`, and `wait-what`. An unquoted colon-space left over from the em-dash sweep in [#905](https://github.com/mattpocock/skills/issues/905) made each block invalid YAML, so `skills.sh` skipped all six during discovery and they couldn't be listed or installed via `npx skills`.
+
+- [#917](https://github.com/mattpocock/skills/pull/917) [`85f83d3`](https://github.com/mattpocock/skills/commit/85f83d3fde1d3a90d5c9a657f6998c79a6c37308) Thanks [@mattpocock](https://github.com/mattpocock)! - grilling: update the round template so consecutive questions are separated by a horizontal rule (`---`) instead of running together.
+
+- [#879](https://github.com/mattpocock/skills/pull/879) [`d419977`](https://github.com/mattpocock/skills/commit/d419977fe07d9e1607d3523f3579310bbb076b93) Thanks [@mattpocock](https://github.com/mattpocock)! - grilling: remove em-dashes from `SKILL.md`, replacing them with colons and semicolons so the instructions read as plain text.
+
+- [#905](https://github.com/mattpocock/skills/pull/905) [`e6e9577`](https://github.com/mattpocock/skills/commit/e6e957797d8cceb5b351c0dc840369523f9fb8fb) Thanks [@mattpocock](https://github.com/mattpocock)! - Remove every em-dash from the repo's prose (docs, `SKILL.md` files, ADRs, `README.md`, scripts, JSON/YAML metadata), hand-rewriting each sentence with a comma, colon, period, parentheses, or conjunction rather than mechanically substituting the character. `CLAUDE.md`/`AGENTS.md` now says not to reintroduce them.
+
+- [`478b734`](https://github.com/mattpocock/skills/commit/478b7342c2c14efacf4f8cb7edaa9851a6ffba44) Thanks [@mattpocock](https://github.com/mattpocock)! - Give the in-progress **`code-review`** skill an always-on Fowler smell baseline on its Standards axis. A curated ~12 high-signal "Bad Smells in Code" (Mysterious Name, Duplicated Code, Feature Envy, Data Clumps, Primitive Obsession, Repeated Switches, Shotgun Surgery, Divergent Change, Speculative Generality, Message Chains, Middle Man, Refused Bequest) are inlined into `SKILL.md` as a fixed baseline alongside whatever the repo documents — not a new third axis. Two binding rules keep it safe: a documented repo standard overrides the baseline, and every smell is reported as a judgement call, never a hard violation.
+
+- [#878](https://github.com/mattpocock/skills/pull/878) [`e3e547b`](https://github.com/mattpocock/skills/commit/e3e547b57d549110a0aa6ff40fd7b871c01c76c9) Thanks [@mattpocock](https://github.com/mattpocock)! - Standardize cross-skill invocation on an explicit "call the Skill tool" instruction instead of bare `/skill`-style prose, across `code-review`, `diagnosing-bugs`, `grill-with-docs`, `grill-me`, `improve-codebase-architecture`, `tdd`, `to-spec`, `to-tickets`, `triage`, and `wayfinder`.
+
+  - A skill that names another skill in prose ("run the `/grilling` skill") does not reliably cause it to load. This is the documented rough edge behind `grill-with-docs`'s most-reported problem. Naming the tool directly (`Call the Skill tool with "grilling"`) is intended to raise the hit rate. Dropping the leading `/` also makes the instruction harness-neutral rather than less: it no longer assumes Claude Code's trigger syntax.
+  - A step needing more than one skill now says so as multiple calls ("Call the Skill tool twice, for `grilling` and `domain-modeling`"), not one call carrying two names.
+  - Documents the convention in `.agents/invocation.md` for future skills to follow.
+
+- [`3c7f812`](https://github.com/mattpocock/skills/commit/3c7f812b56f0ba3247104db80bdc3fb78c24d6cd) Thanks [@mattpocock](https://github.com/mattpocock)! - Reshape the `tdd` skill into reference-only. The red → green → refactor loop is anchored by leading words the model already holds, so the step-by-step Workflow was largely restating the loop and duplicating the horizontal-slicing anti-pattern. Dropped the Workflow and per-cycle checklist; folded their one durable idea — vertical slices / tracer bullets — into the Anti-patterns section and a short Rules-of-the-loop list. Introduced **seam** as the leading word for where tests go, collapsing the old Philosophy "public interfaces" prose and the Planning "confirm interface / behaviors" handshake into one rule: test only at pre-agreed seams, confirmed with the user before any test is written.
+
+  Also dropped the refactor stage — TDD is now red → green, not red → green → refactor. Refactoring belongs to the review stage, not the implementation loop, so the refactor rule and `refactoring.md` were removed (its home is the `review` skill).
+
+- [`c57c8dd`](https://github.com/mattpocock/skills/commit/c57c8ddaf614b990cc718797cbe9e1c184cd93a4) Thanks [@mattpocock](https://github.com/mattpocock)! - Add the **tautological test** anti-pattern to the `tdd` skill. Tests whose assertion is recomputed the way the code computes it pass by construction and give zero confidence — distinct from the implementation-coupling anti-pattern already covered. Added as a peer at the same three sites: a Philosophy principle (expected values must come from an independent source of truth), a per-cycle checklist gate, and a BAD/GOOD example pair in `tests.md`.
+
+- [#880](https://github.com/mattpocock/skills/pull/880) [`1dab982`](https://github.com/mattpocock/skills/commit/1dab98299c3b81f560026c01b7ebf55ed5d91373) Thanks [@mattpocock](https://github.com/mattpocock)! - Stop skills from trying to reach user-invoked skills through the Skill tool: fix cross-skill references that violated the "no other skill can call it" invariant in `.agents/invocation.md`, in `to-spec`, `wayfinder`, `to-tickets`, `triage`, `code-review`, and `diagnosing-bugs`.
+
+  - `to-spec`, `wayfinder`, `to-tickets`, `triage`, and `code-review` each carried a precondition ("...run `/setup-matt-pocock-skills` if not") that PR [#878](https://github.com/mattpocock/skills/issues/878) rewrote into a literal `Call the Skill tool with "setup-matt-pocock-skills"` instruction. `setup-matt-pocock-skills` is user-invoked, so none of these skills (user-invoked or model-invoked) can call it. Reworded all five as instructions for the agent to tell the human to run it instead.
+  - `diagnosing-bugs`'s Phase 6 post-mortem hand off to `improve-codebase-architecture` (also user-invoked) the same way, from an autonomous, often-unattended bug-fixing flow with no human in the loop to catch the failed call. Removed the hand-off outright rather than softening it, since it rarely fired in practice. Phase 6 is now "Cleanup" only; the mechanical checklist is untouched.
+  - Added a carve-out paragraph to `.agents/invocation.md`'s "Dependencies between them" section: the `Call the Skill tool with "name"` convention only applies when the named skill is model-invoked. This is the section PR [#878](https://github.com/mattpocock/skills/issues/878) introduced without reconciling it against the user-invoked/model-invoked invariant stated eight lines above it; the gap is most of why this bug reached six call sites instead of one.
+
+  Fixes [#453](https://github.com/mattpocock/skills/issues/453).
+
+- [#904](https://github.com/mattpocock/skills/pull/904) [`594f0f8`](https://github.com/mattpocock/skills/commit/594f0f83188921a60d45d63d6cdac509de20df2c) Thanks [@mattpocock](https://github.com/mattpocock)! - wait-what: follow `GLOSSARY-MAP.md` to the right `GLOSSARY.md` when a repo indexes multiple contexts that way instead of keeping a single root `GLOSSARY.md`.
+
+- [`90c633c`](https://github.com/mattpocock/skills/commit/90c633c4a8f238df2da229b1c475ef3096a780be) Thanks [@mattpocock](https://github.com/mattpocock)! - Sharpen Wayfinder's blocking rule to prefer the tracker's native dependency relationship, and update the GitHub and GitLab issue-tracker templates to match.
+
+  Native blocking is essential rather than cosmetic: it renders the frontier visually in the tracker's own UI, so the human sees what's takeable at a glance without opening the map. `wayfinder`'s SKILL.md now states that preference and rationale; the GitHub template spells out the native issue-dependencies recipe (`gh api .../dependencies/blocked_by`, frontier query on `issue_dependencies_summary.blocked_by`), and the GitLab template names the native `/blocked_by` blocking link (Premium/Ultimate) with the body-convention fallback. Both keep the body fallback for trackers that lack native blocking.
+
 ## 1.2.3
 
 ### Patch Changes
