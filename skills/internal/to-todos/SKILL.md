@@ -31,8 +31,9 @@ Require a specification in the conversation or a document path supplied with the
 4. Split a unit further if it has multiple unrelated outcomes, cannot be verified clearly, or is too large for one focused session. Merge units that are not useful on their own.
 5. Build a directed acyclic dependency graph. Add an edge only when one todo genuinely cannot begin or complete before another. Do not treat execution sequence alone as dependency.
 6. Assign each todo a unique positive integer `execution_order` using a topological ordering. Break ties between independent todos by choosing the order that reduces integration risk and enables earlier verification.
-7. Create todos with Pi's installed `todo` tools in execution order. Let the tools own the todo format; do not redefine it in this skill.
-8. After all IDs are known, update each todo so it:
+7. the execution order number should be used in the todo name to make the order easily visible if the list of all todos are shown
+8. Create todos with Pi's installed `todo` tools in execution order. Let the tools own the todo format; do not redefine it in this skill.
+9. After all IDs are known, update each todo so it:
    - has an `execution_order` frontmatter property;
    - identifies the todos it depends on;
    - identifies the todos it blocks;
